@@ -1,0 +1,59 @@
+This README file contains information on building the meta-ion330
+BSP layer, and booting the images contained in the /binary directory.
+Please see the corresponding sections below for details.
+
+The first generation ION platform consists of the Intel Atom x30 processor,
+plus the nVidia graphic chip.
+
+Dependencies
+============
+
+This layer depends on:
+
+  URI: git://git.openembedded.org/bitbake
+  branch: master
+
+  URI: git://git.openembedded.org/openembedded-core
+  layers: meta
+  branch: master
+
+  URI: git://git.yoctoproject.org/meta-intel
+  layers: intel
+  branch: master
+
+
+Table of Contents
+=================
+
+  I. Building the meta-ion330 BSP layer
+
+
+I. Building the meta-crownbay BSP layer
+=======================================
+
+In order to build an image with BSP support for a given release, you
+need to download the corresponding BSP tarball from somewhere.
+
+Having done that, and assuming you extracted the BSP tarball contents
+at the top-level of your yocto build tree, you can build a ion330
+image by adding the location of the meta-ion330 layer to
+bblayers.conf, along with the meta-intel layer itself (to access
+common metadata shared between BSPs) e.g.:
+
+  yocto/meta-intel \
+  yocto/meta-ion330 \
+
+To enable the layer add the following to the local.conf file:
+
+  MACHINE ?= "ion330"
+
+You should then be able to build a ion330 image as such:
+
+  $ source oe-init-build-env
+  $ bitbake core-image-sato
+
+At the end of a successful build, you should have a live image that
+you can boot from a USB flash drive (see instructions on how to do
+that below, in the section 'Booting the images from /binary').
+
+

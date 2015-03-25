@@ -1,0 +1,60 @@
+From d1ee026f6f5891462984c7ae8fb592910cc57232 Mon Sep 17 00:00:00 2001
+From: Vladimir Ivakin <vladimir_iva@pisem.net>
+Date: Wed, 28 Jan 2015 12:30:28 +0300
+Subject: [PATCH] define-GLAPI
+
+---
+ gl.h | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/gl.h b/gl.h
+index 914e645..af6438e 100644
+--- a/gl.h
++++ b/gl.h
+@@ -39,15 +39,25 @@ extern "C" {
+ #define WINGDIAPI
+ #endif
+ 
++#if defined(__WIN32__) && !defined(__CYGWIN__)
++#  if (defined(_MSC_VER) || defined(__MINGW32__)) && defined(BUILD_GL32) /* tag specify we're building mesa as a DLL */
++#    define GLAPI __declspec(dllexport)
++#  elif (defined(_MSC_VER) || defined(__MINGW32__)) && defined(_DLL) /* tag specifying we're building for DLL runtime support */
++#    define GLAPI __declspec(dllimport)
++#  else /* for use with static link lib build of Win32 edition only */
++#    define GLAPI extern
++#  endif /* _STATIC_MESA support */
++#elif defined(__CYGWIN__) && defined(USE_OPENGL32) /* use native windows opengl32 */
++#  define GLAPI extern
++#elif (defined(__GNUC__) && __GNUC__ >= 4) || (defined(__SUNPRO_C) && (__SUNPRO_C >= 0x590))
++#  define GLAPI __attribute__((visibility("default")))
++#endif /* WIN32 && !CYGWIN */
++
+ #ifndef GLAPI
+-# ifdef _WIN32
+-#  define GLAPI __stdcall
+-# else
+-#  define GLAPI
+-# endif
+-# define __DEFINED_GLAPI
++#define GLAPI extern
+ #endif
+ 
++
+ /*************************************************************/
+ 
+ typedef unsigned int GLenum;
+@@ -1621,11 +1631,6 @@ WINGDIAPI void APIENTRY glVertex4sv (const GLshort *v);
+ WINGDIAPI void APIENTRY glVertexPointer (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+ WINGDIAPI void APIENTRY glViewport (GLint x, GLint y, GLsizei width, GLsizei height);
+ 
+-#ifdef __DEFINED_GLAPI
+-# undef GLAPI
+-# undef __DEFINED_GLAPI
+-#endif
+-
+ #ifndef GL_GLEXT_LEGACY
+ #include <GL/glext.h>
+ #endif
+-- 
+2.2.1
+

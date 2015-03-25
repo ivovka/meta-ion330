@@ -1,0 +1,84 @@
+From 88b1d81cc98fff3dd575566f3124543f7ff08aee Mon Sep 17 00:00:00 2001
+From: Vladimir Ivakin <vladimir_iva@pisem.net>
+Date: Thu, 8 Jan 2015 00:55:00 +0300
+Subject: [PATCH] oe-cross-compile
+
+---
+ kernel/conftest.sh              |  6 ++++++
+ kernel/nvidia-modules-common.mk | 15 +++++++--------
+ 2 files changed, 13 insertions(+), 8 deletions(-)
+
+diff --git kernel.orig/conftest.sh kernel/conftest.sh
+index 2886e32..363d7da 100755
+--- kernel.orig/conftest.sh
++++ kernel/conftest.sh
+@@ -26,6 +26,11 @@ XEN_PRESENT=1
+ PREEMPT_RT_PRESENT=0
+ COMPILE_TEST_HEADERS="macros functions symbols types generic headers"
+ 
++if [ $ARCH = "x86" ]; then
++ARCH="i386"
++fi
++
++
+ # VGX_BUILD parameter defined only for VGX builds
+ 
+ test_xen() {
+@@ -2101,6 +2106,7 @@ case "$6" in
+         # Determine the caller's user id to determine if we have sufficient
+         # privileges for the requested operation.
+         #
++        exit 0
+         if [ $(id -ur) != 0 ]; then
+             echo "";
+             echo "Please run \"make install\" as root.";
+diff --git kernel.orig/nvidia-modules-common.mk kernel/nvidia-modules-common.mk
+index 1795081..e9a211f 100644
+--- kernel.orig/nvidia-modules-common.mk
++++ kernel/nvidia-modules-common.mk
+@@ -20,8 +20,8 @@
+ module module-sign module-install package-install clean print-module-filename \
+ conftest-compile-test
+ 
+-all: install
+-install: package-install
++all: module
++install: module-install
+ 
+ #
+ # The precompiled kernel module build process requires a separation of the
+@@ -97,7 +97,7 @@ endif
+ CONFTEST := /bin/sh $(src)/conftest.sh "$(CC)" "$(HOST_CC)" $(ARCH) $(KERNEL_SOURCES) $(KERNEL_OUTPUT)
+ 
+ KERNEL_UNAME ?= $(shell $(CONFTEST) get_uname)
+-MODULE_ROOT := /lib/modules/$(KERNEL_UNAME)/kernel/drivers
++MODULE_ROOT := $(INSTALL_MOD_PATH)/lib/modules/$(KERNEL_UNAME)/kernel/drivers
+ 
+ #
+ # Sets any internal variables left unset by KBUILD (e.g. this happens during
+@@ -270,18 +270,17 @@ module-sign: $(MODULE_OBJECT)
+ # sufficient privileges. Rebuild the module dependency file.
+ #
+ 
+-module-install: suser-sanity-check module
++module-install: module
+ 	@mkdir -p $(MODULE_ROOT)/video; \
+-	install -m 0664 -o root -g root $(MODULE_OBJECT) $(MODULE_ROOT)/video; \
+-	PATH="$(PATH):/bin:/sbin" depmod -a
++	install -m 0664 $(MODULE_OBJECT) $(MODULE_ROOT)/video; \
++	#PATH="$(PATH):/bin:/sbin" depmod -a
+ 
+ #
+ # This target builds, then installs, then creates device nodes and inserts
+ # the module, if successful.
+ #
+ 
+-package-install: module-install rmmod-sanity-check
+-	@PATH="$(PATH):/bin:/sbin" modprobe $(MODULE_NAME) && \
++package-install: module-install
+ 	echo "$(MODULE_OBJECT) installed successfully.";
+ 
+ #
+-- 
+2.2.1
+
