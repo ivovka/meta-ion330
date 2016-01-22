@@ -26,6 +26,7 @@ Table of Contents
 =================
 
   I. Building the meta-ion330 BSP layer
+  II. History
 
 
 I. Building the meta-crownbay BSP layer
@@ -56,4 +57,7 @@ At the end of a successful build, you should have a live image that
 you can boot from a USB flash drive (see instructions on how to do
 that below, in the section 'Booting the images from /binary').
 
+II. History
+=====================================
 
+20160122 Release 0.1
