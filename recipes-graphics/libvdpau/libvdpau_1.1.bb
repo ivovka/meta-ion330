@@ -14,8 +14,8 @@ DEPENDS = "virtual/libx11 libxext dri2proto"
 LIC_FILES_CHKSUM = "file://COPYING;md5=83af8811a28727a13f04132cc33b7f58"
 
 SRC_URI = "http://people.freedesktop.org/~aplattner/vdpau/libvdpau-${PV}.tar.gz"
-SRC_URI[md5sum] = "cb81b0c3b7d32b2b2a51894ef05b95ce"
-SRC_URI[sha256sum] = "24dc08467ce8c59d6cfbf0d34d2dd1f86b4ff62e90777e0a8f513c5c9de9bce0"
+SRC_URI[md5sum] = "38d362869f1da5516f0f927db4d606c3"
+SRC_URI[sha256sum] = "aea4e783f220bf26ba2139ccd866a0ee5005fa03af5e08c41fbc939118263919"
 
 inherit autotools pkgconfig
 
