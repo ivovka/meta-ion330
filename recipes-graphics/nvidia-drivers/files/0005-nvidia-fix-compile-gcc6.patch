@@ -1,0 +1,82 @@
+--- kernel.orig/nv.c	2014-12-02 17:38:05.000000000 +0100
++++ kernel/nv.c	2017-03-13 07:51:00.360000010 +0100
+@@ -1839,7 +1839,7 @@
+     unsigned long i_arg
+ )
+ {
+-    return nvidia_ioctl(file->f_dentry->d_inode, file, cmd, i_arg);
++    return nvidia_ioctl(file_inode(file), file, cmd, i_arg);
+ }
+ 
+ /*
+--- kernel.orig/nv-procfs.c	2014-12-02 17:38:05.000000000 +0100
++++ kernel/nv-procfs.c	2017-03-13 07:51:23.203333347 +0100
+@@ -356,7 +356,8 @@
+     registry_keys = ((nvl != NULL) ?
+             nvl->registry_keys : nv_registry_keys);
+ 
+-    return seq_printf(s, "Binary: \"%s\"\n", registry_keys);
++    seq_printf(s, "Binary: \"%s\"\n", registry_keys);
++    return 0;
+ }
+ 
+ static ssize_t
+@@ -552,7 +553,8 @@
+     void *v
+ )
+ {
+-    return seq_puts(s, s->private);
++    seq_puts(s, s->private);
++    return 0;
+ }
+ 
+ NV_DEFINE_PROCFS_SINGLE_FILE(text_file);
+--- kernel.orig/os-mlock.c	2014-12-02 17:38:05.000000000 +0100
++++ kernel/os-mlock.c	2017-03-13 07:51:44.623333347 +0100
+@@ -45,7 +45,7 @@
+     }
+ 
+     down_read(&mm->mmap_sem);
+-    ret = get_user_pages(current, mm, (unsigned long)address,
++    ret = get_user_pages_remote(current, mm, (unsigned long)address,
+             page_count, write, force, user_pages, NULL);
+     up_read(&mm->mmap_sem);
+     pinned = ret;
+@@ -58,7 +58,7 @@
+     else if (pinned < page_count)
+     {
+         for (i = 0; i < pinned; i++)
+-            page_cache_release(user_pages[i]);
++            put_page(user_pages[i]);
+         os_free_mem(user_pages);
+         return RM_ERR_INVALID_ADDRESS;
+     }
+@@ -85,7 +85,7 @@
+     {
+         if (write)
+             set_page_dirty_lock(user_pages[i]);
+-        page_cache_release(user_pages[i]);
++        put_page(user_pages[i]);
+     }
+ 
+     os_free_mem(user_pages);
+--- kernel.orig/nv-frontend.c	2014-12-02 17:38:05.000000000 +0100
++++ kernel/nv-frontend.c	2017-03-13 07:52:01.963333346 +0100
+@@ -327,7 +327,7 @@
+     unsigned long i_arg
+ )
+ {
+-    return nvidia_frontend_ioctl(file->f_dentry->d_inode, file, cmd, i_arg);
++    return nvidia_frontend_ioctl(file_inode(file), file, cmd, i_arg);
+ }
+ 
+ long nvidia_frontend_compat_ioctl(
+@@ -336,7 +336,7 @@
+     unsigned long i_arg
+ )
+ {
+-    return nvidia_frontend_ioctl(file->f_dentry->d_inode, file, cmd, i_arg);
++    return nvidia_frontend_ioctl(file_inode(file), file, cmd, i_arg);
+ }
+ 
+ int nvidia_frontend_mmap(
