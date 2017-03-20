@@ -17,8 +17,8 @@ SRC_URI="http://download.nvidia.com/XFree86/Linux-${NVIDIA_ARCH}/${PV}/${PKG_BAS
 #             file://0002-define-GLAPI.patch \
 #           "
 SRC_URI += " file://0001-oe-cross-compile.patch \
-	     file://0005-nvidia-fix-compile-gcc6.patch \
            "
+#	     file://0005-nvidia-fix-compile-gcc6.patch 
 
 S="${WORKDIR}/${PKG_BASENAME}/kernel"
 
