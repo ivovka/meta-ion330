@@ -9,5 +9,7 @@ SRCREV_machine_ion330 ?= "9bcb4ea3fa107f1a8790c8c3408eb250e8d1d66e"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 SRC_URI += "file://defconfig \
+  file://usb-keyboard.cfg \
+  file://cgroups.cfg \
       "
 KERNEL_FEATURES_remove = "features/netfilter/netfilter.scc"
