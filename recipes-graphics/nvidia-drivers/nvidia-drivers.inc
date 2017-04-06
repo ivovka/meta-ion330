@@ -37,8 +37,6 @@ KERNEL_PATCHLEVEL = "${@get_kernelpatchlevel('${KERNEL_VERSION}')}"
 EXTRA_OEMAKE = " SYSSRC=${STAGING_KERNEL_DIR} SYSOUT=${STAGING_KERNEL_BUILDDIR} IGNORE_CC_MISMATCH=1 "
 PKG_BASENAME="NVIDIA-Linux-${NVIDIA_ARCH}-${PV}"
 
-FILES_${PN}-doc += " /usr/share/doc/*"
-
 nvidia_do_unpack() {
     cd ${WORKDIR}
     # the Nvidia installer fails if this directory already exist
@@ -48,7 +46,7 @@ nvidia_do_unpack() {
     # copy the license from the unpack dir to S (the license check
         # is too daft to find it otherwise)
     cp ${WORKDIR}/${PKG_BASENAME}/LICENSE ${S}
-    cp ${WORKDIR}/${PKG_BASENAME}/gl.h ${S}
+    cp ${WORKDIR}/${PKG_BASENAME}/*.h ${S}
 }
 
 python do_unpack() {
