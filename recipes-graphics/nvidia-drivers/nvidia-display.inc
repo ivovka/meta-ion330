@@ -146,6 +146,9 @@ do_install() {
 	ln -s libEGL.so.1 ${D}/usr/lib/libEGL.so
 	#install applications
 	install -m 0755 ${WORKDIR}/${PKG_BASENAME}/{nvidia-settings,nvidia-xconfig,nvidia-smi,nvidia-persistenced} ${D}/usr/bin
+	#fix libGL.la
+	sed -i -e 's:__GENERATED_BY__:Yocto:' ${D}/usr/lib/libGL.la
+	sed -i -e 's:__LIBGL_PATH__:/usr/lib:' ${D}/usr/lib/libGL.la
 }
 
 PACKAGES += " libgl-nvidia \
