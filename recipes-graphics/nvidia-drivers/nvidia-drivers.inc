@@ -34,10 +34,8 @@ COMPATIBLE_HOST = '.*86.*-linux'
 KERNEL_PATCHLEVEL = "${@get_kernelpatchlevel('${KERNEL_VERSION}')}"
 #EXTRA_OEMAKE=" SYSSRC=${STAGING_KERNEL_DIR} KERNEL_SOURCES=${STAGING_KERNEL_DIR} KERNEL_MODLIB=${STAGING_KERNEL_DIR} KERNEL_UNAME=${KERNEL_VERSION} PATCHLEVEL=${KERNEL_PATCHLEVEL} MODULE_ROOT=${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers IGNORE_CC_MISMATCH=1"
 
-EXTRA_OEMAKE = " SYSSRC=${STAGING_KERNEL_DIR} SYSOUT=${STAGING_KERNEL_DIR} IGNORE_CC_MISMATCH=1 "
+EXTRA_OEMAKE = " SYSSRC=${STAGING_KERNEL_DIR} SYSOUT=${STAGING_KERNEL_BUILDDIR} IGNORE_CC_MISMATCH=1 "
 PKG_BASENAME="NVIDIA-Linux-${NVIDIA_ARCH}-${PV}"
-
-FILES_${PN}-doc += " /usr/share/doc/*"
 
 nvidia_do_unpack() {
     cd ${WORKDIR}
@@ -48,7 +46,7 @@ nvidia_do_unpack() {
     # copy the license from the unpack dir to S (the license check
         # is too daft to find it otherwise)
     cp ${WORKDIR}/${PKG_BASENAME}/LICENSE ${S}
-    cp ${WORKDIR}/${PKG_BASENAME}/gl.h ${S}
+    cp ${WORKDIR}/${PKG_BASENAME}/*.h ${S}
 }
 
 python do_unpack() {
