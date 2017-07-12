@@ -2,7 +2,7 @@ DESCRIPTION = "JFS Filesystem Utilities"
 HOMEPAGE = "http://jfs.sourceforge.net/"
 SECTION = "base"
 PR = "r0"
-#DEPENDS = "util-linux-ng"
+DEPENDS = "util-linux"
 
 SRC_URI = "http://jfs.sourceforge.net/project/pub/${PN}-${PV}.tar.gz"
 SRC_URI += "file://0001-add-sys-types-h-to-extract-c.patch"
