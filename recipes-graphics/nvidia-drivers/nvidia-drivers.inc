@@ -13,8 +13,8 @@ inherit module
 INHIBIT_PACKAGE_STRIP_${PN} = "1"
 
 def nvidia_arch(d):
-    import bb, re
-    arch = bb.data.getVar('TARGET_ARCH', d, 1)
+    import re
+    arch = d.getVar('TARGET_ARCH', True)
     if re.match("^i.86$", arch):
         arch = "x86"
     return arch

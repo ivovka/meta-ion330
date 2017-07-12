@@ -17,8 +17,9 @@ SRC_URI="http://download.nvidia.com/XFree86/Linux-${NVIDIA_ARCH}/${PV}/${PKG_BAS
 #             file://0002-define-GLAPI.patch \
 #           "
 SRC_URI += " file://0001-oe-cross-compile.patch \
-  ftp://download.nvidia.com/XFree86/vdpau/include/vdpau/vdpau_x11.h;name=vdpau_x11 \
-  ftp://download.nvidia.com/XFree86/vdpau/include/vdpau/vdpau.h;name=vdpau \
+  file://0009-nv340on410.patch \
+  http://http.download.nvidia.com/XFree86/vdpau/include/vdpau/vdpau_x11.h;name=vdpau_x11 \
+  http://http.download.nvidia.com/XFree86/vdpau/include/vdpau/vdpau.h;name=vdpau \
   https://www.khronos.org/registry/EGL/api/EGL/egl.h;name=egl \
   https://www.khronos.org/registry/EGL/api/EGL/eglext.h;name=eglext \
   https://www.khronos.org/registry/EGL/api/EGL/eglplatform.h;name=eglplatform \
@@ -36,20 +37,30 @@ SRC_URI[vdpau_x11.md5sum] = "6b950995a6b742d236087bf0a97b15d5"
 SRC_URI[vdpau_x11.sha256sum] = "d29bf9dda3961cfd8ec3c391cad3e3a3294f419cab566a1cce48969dcd534a34"
 SRC_URI[vdpau.md5sum] = "098ec61321177e81b52e3d0c1b4a0223"
 SRC_URI[vdpau.sha256sum] = "a0c12541b26934ef55e2b951d4b9c5d2e42832bf987c5ace34dae406db58611a"
-SRC_URI[egl.md5sum] = "3165120316419eca041fc7f1ae33a51e"
-SRC_URI[egl.sha256sum] = "26a4496ae48549b858de9e9ceadee8dc1c65dd020a3cf852e55367d4e16ce86e"
-SRC_URI[eglext.md5sum] = "e62928dacbf58e98a675b0e12a2ef8b2"
-SRC_URI[eglext.sha256sum] = "a2e10144e44035461a0cf4ce68969f3b2f734147d910215b3dd556ffb4dbedf9"
+#SRC_URI[egl.md5sum] = "3165120316419eca041fc7f1ae33a51e"
+#SRC_URI[egl.sha256sum] = "26a4496ae48549b858de9e9ceadee8dc1c65dd020a3cf852e55367d4e16ce86e"
+SRC_URI[egl.md5sum] = "647e0537660f4954f8f48faeb03c6928"
+SRC_URI[egl.sha256sum] = "c3dc71d18dd4f2e4c7277876a2d6ae0b5c7f189933826e6bc0b0f8f2e2e94588"
+#SRC_URI[eglext.md5sum] = "e62928dacbf58e98a675b0e12a2ef8b2"
+#SRC_URI[eglext.sha256sum] = "a2e10144e44035461a0cf4ce68969f3b2f734147d910215b3dd556ffb4dbedf9"
+SRC_URI[eglext.md5sum] = "4206d90339aa4a553b32e9e5d1e08311"
+SRC_URI[eglext.sha256sum] = "7613ec1daf1538c559d30f08c9ea986c70e89debab83056a34c349611a8aa513"
 SRC_URI[eglplatform.md5sum] = "6c8a1dbeb4d7d60ea46eea572df0cbff"
 SRC_URI[eglplatform.sha256sum] = "e65cb25136676afa1207704437c3cd3fab92e507dd8d220171306814db66b133"
 SRC_URI[khrplatform.md5sum] = "b1b3e1eecabd608e3d05f1e338dc1bed"
 SRC_URI[khrplatform.sha256sum] = "fe7725728dc40d46134d9838d29e3bbbc95a70e77a1182a2be9ded6470a2378d"
-SRC_URI[glext.md5sum] = "366d62af3b3ba69a9e554333349c9a37"
-SRC_URI[glext.sha256sum] = "0d078c50889b0a91be4f3414a529480b613db1d6534c250503f9110ac322c383"
-SRC_URI[glxext.md5sum] = "8e766bb79bf536f7c87041c35f42f10e"
-SRC_URI[glxext.sha256sum] = "dfcdfbd520a995d69a3dc485e540138b5bb2bb0f202e0b727e0fe7a934f570f6"
-SRC_URI[glcorearb.md5sum] = "cd9af4217b30fdcf45111aff7b7710a0"
-SRC_URI[glcorearb.sha256sum] = "db9285e9d43355f1547413740a86d940298a57a06cadc43d6de15a93121da148"
+#SRC_URI[glext.md5sum] = "366d62af3b3ba69a9e554333349c9a37"
+#SRC_URI[glext.sha256sum] = "0d078c50889b0a91be4f3414a529480b613db1d6534c250503f9110ac322c383"
+SRC_URI[glext.md5sum] = "ffe0a2fb8e424c117d62f09dd50a8861"
+SRC_URI[glext.sha256sum] = "c34ab66205c2ab299ce1e1fb3d62bd8b53858c1605859f8ea5848bc70b89b8a2"
+#SRC_URI[glxext.md5sum] = "8e766bb79bf536f7c87041c35f42f10e"
+#SRC_URI[glxext.sha256sum] = "dfcdfbd520a995d69a3dc485e540138b5bb2bb0f202e0b727e0fe7a934f570f6"
+SRC_URI[glxext.md5sum] = "23e6bae572d8b926b10475a400d4ff46"
+SRC_URI[glxext.sha256sum] = "7e03c7de912418525c24c039d0166b211c0501f585e0c1bb942ea5370d654afa"
+#SRC_URI[glcorearb.md5sum] = "cd9af4217b30fdcf45111aff7b7710a0"
+#SRC_URI[glcorearb.sha256sum] = "db9285e9d43355f1547413740a86d940298a57a06cadc43d6de15a93121da148"
+SRC_URI[glcorearb.md5sum] = "e5ab9c335849e6fe2b8050396c200b15"
+SRC_URI[glcorearb.sha256sum] = "04bd6fbabb3638d481d029f852ed00d2ffdc716040d2d0c28325274cd7210dc6"
 
 S="${WORKDIR}/${PKG_BASENAME}/kernel"
 
