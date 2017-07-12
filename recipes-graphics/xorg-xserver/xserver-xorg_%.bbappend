@@ -1,5 +1,6 @@
 #PACKAGECONFIG = "udev ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'glx', '', d)}"
 # PACKAGECONFIG_remove_ion330 = "dri2 dri glx"
+PACKAGECONFIG_remove_ion330 = "dri2 dri"
 #PACKAGECONFIG[dri] = "--enable-dri,--disable-dri,glproto xf86driproto"
 EXTRA_OECONF_remove_ion330 = "--disable-xinerama"
 EXTRA_OECONF_append_ion330 = " --enable-xinerama"
@@ -20,4 +21,5 @@ EXTRA_OECONF_append_ion330 = " --enable-xinerama"
 #                 --with-sha1=libcrypto \
 #                 ac_cv_file__usr_share_sgml_X11_defs_ent=no \
 #"
+PACKAGECONFIG_remove_ion330 = "glamor"
 
